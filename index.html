@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syed Wasi Akbar | React Native Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-core: #0a0e14;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --gradient-main: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --radius-lg: 20px;
+            --easing: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background: var(--bg-core); 
+            color: var(--text-main); 
+            font-family: var(--font-body); 
+            line-height: 1.7; 
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Enhanced Progress Bar */
+        #progress-bar { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            height: 4px; 
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb); 
+            z-index: 10000; 
+            width: 0%; 
+            transition: width 0.1s;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Animated Background */
+        #canvas-bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: -1; 
+            opacity: 0.7; 
+        }
+
+        .ambient-glow { 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 80vw; 
+            height: 80vh; 
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, rgba(15, 17, 21, 0) 70%); 
+            z-index: -2; 
+            pointer-events: none; 
+            animation: pulse-glow 8s infinite alternate; 
+        }
+
+        /* Floating Orbs */
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: #667eea; top: 10%; left: 10%; animation-delay: 0s; }
+        .orb-2 { width: 350px; height: 350px; background: #764ba2; bottom: 20%; right: 10%; animation-delay: 5s; }
+        .orb-3 { width: 300px; height: 300px; background: #f093fb; top: 50%; left: 50%; animation-delay: 10s; }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+        h1, h2, h3 { font-family: var(--font-display); color: var(--text-main); }
+        
+        .section-title { 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            margin-bottom: 4rem; 
+            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #764ba2 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            display: inline-block;
+            position: relative;
+            animation: gradient-shift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Enhanced Buttons */
+        .btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 0.5rem;
+            padding: 1.2rem 3rem; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            position: relative; 
+            overflow: hidden; 
+            cursor: none;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 100%; 
+            height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
+            transition: 0.6s; 
+        }
+        
+        .btn:hover::before { left: 100%; }
+        .btn:hover { 
+            transform: translateY(-3px) scale(1.05); 
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-secondary { 
+            background: transparent; 
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+        .btn-secondary:hover { 
+            background: rgba(255,255,255,0.1); 
+            border-color: white; 
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Premium Cursor */
+        .cursor-dot { 
+            width: 10px; 
+            height: 10px; 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+            border-radius: 50%; 
+            position: fixed; 
+            pointer-events: none; 
+            z-index: 9999; 
+            mix-blend-mode: screen; 
+            transform: translate(-50%, -50%); 
+            transition: opacity 0.3s, transform 0.2s;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+        }
+        
+        .cursor-circle { 
+            width: 50px; 
+            height: 50px; 
+            border: 2px solid rgba(102, 126, 234, 0.4); 
+            border-radius: 50%; 
+            position: fixed; 
+            pointer-events: none; 
+            z-index: 9998; 
+            transition: width 0.3s, height 0.3s, background 0.3s, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transform: translate(-50%, -50%);
+            backdrop-filter: blur(5px);
+        }
+        
+        body.hovering .cursor-circle { 
+            width: 70px; 
+            height: 70px; 
+            background: rgba(102, 126, 234, 0.1); 
+            border-color: #667eea; 
+            border-width: 3px;
+        }
+        
+        body.hovering .cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        /* Hero Section */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .hero h1 { 
+            font-size: clamp(3rem, 10vw, 7rem); 
+            line-height: 1.1; 
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: title-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(118, 75, 162, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            background: linear-gradient(90deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+        }
+
+        /* Enhanced About Section */
+        .about-layout { 
+            display: grid; 
+            grid-template-columns: 1.2fr 1fr; 
+            gap: 5rem; 
+            align-items: start; 
+        }
+
+        .bio-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .glass-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Enhanced Skills */
+        .skill-group { 
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        
+        .skill-group:hover {
+            transform: translateX(10px);
+        }
+
+        .skill-header { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 0.8rem; 
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .progress-track { 
+            width: 100%; 
+            height: 8px; 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 10px; 
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill { 
+            height: 100%; 
+            background: linear-gradient(90deg, #667eea, #764ba2); 
+            width: 0; 
+            border-radius: 10px; 
+            transition: width 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Premium Project Cards */
+        .projects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2.5rem; 
+        }
+        
+        .project-card {
+            background: transparent;
+            perspective: 1500px; 
+            height: 450px; 
+            cursor: none;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            border-radius: var(--radius-lg);
+        }
+
+        .card-inner.flipped { 
+            transform: rotateY(180deg); 
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.4s;
+        }
+
+        .card-front:hover {
+            box-shadow: 0 30px 80px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-front .project-image {
+            height: 60%;
+            background: linear-gradient(135deg, #1a1d24 0%, #0f1419 100%);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 4.5rem; 
+            color: #667eea;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-front .project-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: rotate-gradient 10s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-front .project-image i {
+            position: relative;
+            z-index: 1;
+            animation: icon-float 3s ease-in-out infinite;
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .card-front .project-content { 
+            padding: 2rem; 
+            text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(15, 17, 21, 0.95) 100%);
+            padding: 3rem;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .card-back h3 { 
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .card-back p { 
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Form */
+        .form-group { 
+            position: relative; 
+            margin-bottom: 2.5rem; 
+            text-align: left; 
+        }
+
+        .form-input { 
+            width: 100%; 
+            background: rgba(255,255,255,0.03); 
+            border: none; 
+            border-bottom: 2px solid var(--border-color); 
+            padding: 1.2rem 0; 
+            color: #fff; 
+            font-size: 1rem; 
+            transition: all 0.3s;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .form-input:focus { 
+            outline: none; 
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-label { 
+            position: absolute; 
+            top: 1.2rem; 
+            left: 0; 
+            color: var(--text-muted); 
+            pointer-events: none; 
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .form-input:focus + .form-label, 
+        .form-input:not(:placeholder-shown) + .form-label { 
+            top: -10px; 
+            font-size: 0.8rem; 
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Enhanced Modal */
+        .modal-overlay {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(10px);
+            z-index: 20000;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            opacity: 0; 
+            visibility: hidden; 
+            transition: all 0.4s ease;
+        }
+        
+        .modal-overlay.active { 
+            opacity: 1; 
+            visibility: visible; 
+        }
+        
+        .modal-box {
+            background: linear-gradient(135deg, #1a1d24 0%, #0f1419 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            padding: 4rem; 
+            border-radius: 30px; 
+            text-align: center;
+            max-width: 450px; 
+            transform: scale(0.7) translateY(50px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+        }
+        
+        .modal-overlay.active .modal-box { 
+            transform: scale(1) translateY(0);
+        }
+        
+        .success-icon {
+            width: 100px; 
+            height: 100px; 
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+            color: var(--success); 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 3rem; 
+            margin: 0 auto 2rem;
+            border: 3px solid var(--success);
+            animation: success-pulse 1s ease-out;
+        }
+
+        @keyframes success-pulse {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Footer */
+        footer { 
+            padding: 5rem 0; 
+            border-top: 1px solid var(--border-color); 
+            margin-top: 6rem; 
+            color: var(--text-muted); 
+            text-align: center;
+            background: rgba(255,255,255,0.01);
+        }
+
+        .footer-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+
+        .social-links a { 
+            color: #fff; 
+            margin-left: 2rem; 
+            text-decoration: none; 
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-links a:hover { 
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float { 
+            position: fixed; 
+            width: 65px; 
+            height: 65px; 
+            bottom: 40px; 
+            right: 40px; 
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #FFF; 
+            border-radius: 50%; 
+            text-align: center; 
+            font-size: 32px; 
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); 
+            z-index: 1000; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-decoration: none; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulse-green 2s infinite; 
+        }
+
+        .whatsapp-float:hover { 
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes pulse-green { 
+            0% { box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); } 
+            50% { box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4), 0 0 0 15px rgba(37, 211, 102, 0); } 
+            100% { box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); } 
+        }
+
+        @keyframes pulse-glow { 
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } 
+            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); } 
+        }
+
+        /* Reveal Animation */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(50px); 
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        section { padding: 10rem 0; }
+
+        @media (max-width: 768px) { 
+            .about-layout { grid-template-columns: 1fr; gap: 3rem; } 
+            .hero h1 { font-size: 3rem; } 
+            .footer-content { flex-direction: column; }
+            .social-links a { margin-left: 0; margin-right: 1rem; }
+            section { padding: 5rem 0; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+    <div class="ambient-glow"></div>
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <canvas id="canvas-bg"></canvas>
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h2 style="margin-bottom: 15px; font-size: 2rem;">Message Sent!</h2>
+            <p style="color: #94a3b8; margin-bottom: 2rem; font-size: 1.1rem;">Thank you for reaching out. I will respond to you soon.</p>
+            <button class="btn mag-btn" onclick="closeModal()">Awesome</button>
+        </div>
+    </div>
+
+    <main class="container">
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="reveal">Syed Wasi Akbar</h1>
+                <p class="hero-subtitle reveal">React Native Engineer</p>
+                <p class="reveal" style="font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Constructing high-performance mobile architectures.<br>Specializing in cross-platform ecosystems.</p>
+                <div class="hero-btns reveal">
+                    <a href="#projects" class="btn mag-btn">
+                        <i class="fas fa-code"></i> View Projects
+                    </a>
+                    <a href="#contact" class="btn btn-secondary mag-btn">
+                        <i class="fas fa-envelope"></i> Contact Me
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="about-layout">
+                <div class="bio-text reveal">
+                    <h2 class="section-title">About Me</h2>
+                    <p>I am a passionate React Native Developer focused on building scalable, user-centric mobile applications. My expertise lies in bridging the gap between complex backend logic and smooth interfaces.</p>
+                    <p>With a strong foundation in both mobile and web technologies, I deliver seamless cross-platform experiences that users love and businesses rely on.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <h3 style="margin-bottom: 2.5rem; font-size: 1.5rem;">Technical Stack</h3>
+                    <div class="skill-group">
+                        <div class="skill-header"><span>React Native / JS / TypeScript</span><span>80%</span></div>
+                        <div class="progress-track"><div class="progress-fill" data-width="80%"></div></div>
+                    </div>
+                    <div class="skill-group">
+                        <div class="skill-header"><span>HTML / CSS / Tailwind</span><span>80%</span></div>
+                        <div class="progress-track"><div class="progress-fill" data-width="80%"></div></div>
+                    </div>
+                    <div class="skill-group">
+                        <div class="skill-header"><span>Python</span><span>50%</span></div>
+                        <div class="progress-track"><div class="progress-fill" data-width="50%" style="background: linear-gradient(90deg, #f093fb, #f5576c);"></div></div>
+                    </div>
+                    <div class="skill-group">
+                        <div class="skill-header"><span>C++</span><span>50%</span></div>
+                        <div class="progress-track"><div class="progress-fill" data-width="50%" style="background: linear-gradient(90deg, #f093fb, #f5576c);"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title reveal">Selected Work</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card reveal" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="project-image"><i class="fas fa-truck"></i></div>
+                            <div class="project-content">
+                                <h3 class="project-title">LOGISTIC WEBSITE</h3>
+                                <div style="color: #667eea; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.5rem;">HTML • CSS • JS</div>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">(Click to view details)</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>LOGISTIC WEBSITE</h3>
+                            <p>Responsive logistics website utilizing HTML, CSS, and JavaScript to deliver a seamless user interface for freight and transport services.</p>
+                            <a href="https://blueroutelogistic.online/" target="_blank" class="btn mag-btn" onclick="event.stopPropagation()">
+                                <i class="fas fa-external-link-alt"></i> View Live
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" style="transition-delay: 0.1s;" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="project-image"><i class="fas fa-chart-line"></i></div>
+                            <div class="project-content">
+                                <h3 class="project-title">Parallel Kernel Performance Test</h3>
+                                <div style="color: #667eea; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.5rem;">JAVASCRIPT • PYTHON</div>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">(Click to view details)</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Parallel Kernel Performance Test</h3>
+                            <p>High-performance benchmarking tool utilizing parallel computing techniques to measure kernel execution speedup against serial implementations.</p>
+                            <a href="https://pkpt-proj.vercel.app/" target="_blank" class="btn mag-btn" onclick="event.stopPropagation()">
+                                <i class="fas fa-external-link-alt"></i> View Live
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" style="transition-delay: 0.2s;" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="project-image"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="project-content">
+                                <h3 class="project-title">Enrollment Management System</h3>
+                                <div style="color: #667eea; font-size: 0.85rem; font-weight: bold; margin-bottom: 0.5rem;">REACT NATIVE • FIREBASE</div>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">(Click to view details)</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Enrollment Management System</h3>
+                            <p>Role-based enrollment management system utilizing React Native and Firebase to digitize student form submissions with real-time administrative verification.</p>
+                            <a href="https://github.com/wasiakbar8/Ug-form-System" target="_blank" class="btn mag-btn" onclick="event.stopPropagation()">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title reveal">Let's Connect</h2>
+            <p class="reveal" style="color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">Fill out the form below to receive a response directly to your inbox.</p>
+
+            <form id="contactForm" class="reveal">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div class="form-group">
+                    <input type="text" class="form-input" name="name" placeholder=" " required>
+                    <label class="form-label">Your Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-input" name="phone" placeholder=" " pattern="[0-9+]*">
+                    <label class="form-label">Phone Number (Optional)</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" name="email" placeholder=" " required>
+                    <label class="form-label">Your Email</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" name="message" placeholder=" " required>
+                    <label class="form-label">Project Details</label>
+                </div>
+                
+                <button type="submit" class="btn mag-btn" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </section>
+
+        <footer>
+            <div class="container footer-content">
+                <div>&copy; 2024 Syed Wasi Akbar. All rights reserved.</div>
+                <div class="social-links">
+                    <a href="https://github.com/wasiakbar8" target="_blank" class="mag-btn">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/syed-wasi-akbar-/" target="_blank" class="mag-btn">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="mailto:syedwasiakbar@gmail.com" class="mag-btn">
+                        <i class="fas fa-envelope"></i> Gmail
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <a href="https://wa.me/923186444766" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        /* ===================================================================
+           1. 3D FLIP CARD LOGIC
+           =================================================================== */
+        function flipCard(cardElement) {
+            const inner = cardElement.querySelector('.card-inner');
+            inner.classList.toggle('flipped');
+        }
+
+        /* ===================================================================
+           2. AJAX FORM HANDLING (AUTO CLOSE AFTER 3S)
+           =================================================================== */
+        const form = document.getElementById('contactForm');
+        const modal = document.getElementById('successModal');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const btn = form.querySelector('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            const formData = new FormData(form);
+            
+            fetch("https://formsubmit.co/ajax/syedwasiakbar@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+            .then(response => response.json())
+            .then(data => {
+                form.reset(); 
+                btn.innerHTML = originalHTML;
+                openModal();
+                
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
+            })
+            .catch(error => {
+                console.log(error);
+                btn.innerHTML = '<i class="fas fa-times"></i> Error! Try Again';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 3000);
+            });
+        });
+
+        function openModal() { modal.classList.add('active'); }
+        function closeModal() { modal.classList.remove('active'); }
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        /* ===================================================================
+           3. ENHANCED PARTICLES & CANVAS BACKGROUND
+           =================================================================== */
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() { 
+            width = canvas.width = window.innerWidth; 
+            height = canvas.height = window.innerHeight; 
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width; 
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.8; 
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.size = Math.random() * 2 + 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.vx; 
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath(); 
+                ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
+                ctx.fill();
+            }
+        }
+
+        function initParticles() { 
+            particles = []; 
+            const particleCount = window.innerWidth < 768 ? 30 : 60;
+            for(let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach((p, i) => {
+                p.update(); 
+                p.draw();
+                
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = p.x - particles[j].x;
+                    let dy = p.y - particles[j].y;
+                    let d = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (d < 120) {
+                        ctx.beginPath(); 
+                        ctx.strokeStyle = `rgba(102, 126, 234, ${0.15 - d/800})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.lineTo(particles[j].x, particles[j].y); 
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => { 
+            resize(); 
+            initParticles(); 
+        });
+        
+        resize(); 
+        initParticles(); 
+        animateParticles();
+
+        /* ===================================================================
+           4. PREMIUM CURSOR SYSTEM
+           =================================================================== */
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorCircle = document.querySelector('.cursor-circle');
+        
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            
+            cursorCircle.style.left = `${cursorX}px`;
+            cursorCircle.style.top = `${cursorY}px`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        /* ===================================================================
+           5. MAGNETIC BUTTON EFFECT
+           =================================================================== */
+        document.querySelectorAll('.mag-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        /* ===================================================================
+           6. SCROLL ANIMATIONS & PROGRESS BAR
+           =================================================================== */
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-width');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = (document.documentElement.scrollTop / 
+                            (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + "%";
+        });
+
+        /* ===================================================================
+           7. HOVER STATE MANAGEMENT
+           =================================================================== */
+        document.querySelectorAll('a, button, input, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
+            });
+        });
+
+        /* ===================================================================
+           8. SMOOTH SCROLL FOR ANCHOR LINKS
+           =================================================================== */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        /* ===================================================================
+           9. INITIAL REVEAL ON PAGE LOAD
+           =================================================================== */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.hero .reveal').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, index * 150);
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
