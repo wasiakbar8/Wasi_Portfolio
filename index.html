@@ -91,17 +91,17 @@ section{position:relative;z-index:1;}
 .btn-p:hover::before{left:0;}
 .btn-s{border:1px solid var(--border);color:var(--mid);}
 .btn-s:hover{border-color:var(--magenta);color:var(--magenta);}
-.scroll-ind{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:fadeUp 1s ease 2s forwards;}
+.scroll-ind{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:fadeUp 1s ease 2s forwards;z-index:10;}
 .scroll-line{width:1px;height:50px;background:linear-gradient(180deg,var(--cyan),transparent);animation:sPulse 2s ease infinite;}
 .scroll-txt{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.3em;color:var(--mid);text-transform:uppercase;}
 @keyframes sPulse{0%,100%{opacity:.5}50%{opacity:1}}
 
 /* HERO RIGHT — PROFILE IMAGE */
-.hero-right{position:relative;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn 1.2s ease 1s forwards;}
-@media(max-width:900px){.hero-right{order:-1;}}
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn 1.2s ease 1s forwards;min-height:480px;}
+@media(max-width:900px){.hero-right{order:-1;min-height:360px;}}
 #scene-wrap{position:absolute;inset:0;pointer-events:none;z-index:0;}
 #scene-canvas{width:100%;height:100%;}
-.profile-frame-wrap{position:relative;z-index:1;width:min(340px,80vw);height:min(420px,95vw);}
+.profile-frame-wrap{position:relative;z-index:1;width:min(340px,80vw);height:min(420px,90vw);}
 .profile-frame{width:100%;height:100%;border-radius:4px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 60px rgba(0,245,255,.12),0 30px 60px rgba(0,0,0,.5);position:relative;transform:perspective(1000px) rotateY(-6deg);transition:transform .5s ease;}
 .profile-frame:hover{transform:perspective(1000px) rotateY(0deg) scale(1.02);}
 .profile-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;filter:contrast(1.05) brightness(.92);}
@@ -109,18 +109,14 @@ section{position:relative;z-index:1;}
 .profile-name-tag{position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;z-index:3;background:rgba(2,4,8,.75);backdrop-filter:blur(8px);border:1px solid var(--border);padding:.6rem 1rem;}
 .pnt-name{font-family:'Bebas Neue',cursive;font-size:clamp(.9rem,2vw,1.1rem);letter-spacing:.15em;color:var(--cyan);}
 .pnt-role{font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.18em;color:var(--mid);text-transform:uppercase;margin-top:.2rem;}
-.upload-photo-hint{position:absolute;top:1rem;right:1rem;z-index:4;}
-.upload-btn-sm{font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.12em;padding:.35rem .7rem;border:1px solid rgba(0,245,255,.4);color:var(--mid);background:rgba(2,4,8,.7);cursor:pointer;text-transform:uppercase;transition:all .3s;backdrop-filter:blur(4px);}
-.upload-btn-sm:hover{border-color:var(--cyan);color:var(--cyan);}
 .dev-corner{position:absolute;width:16px;height:16px;border-color:var(--cyan);border-style:solid;z-index:5;}
 .dc-tl{top:-6px;left:-6px;border-width:2px 0 0 2px;}
 .dc-tr{top:-6px;right:-6px;border-width:2px 2px 0 0;}
 .dc-bl{bottom:-6px;left:-6px;border-width:0 0 2px 2px;}
 .dc-br{bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
-#img-file-input{display:none;}
 
 /* STATS */
-.stats-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(2rem,5vw,6rem);padding:clamp(2rem,5vw,4rem) clamp(1.2rem,6vw,4rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(90deg,transparent,rgba(0,245,255,.025),transparent);}
+.stats-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(2rem,5vw,6rem);padding:clamp(2rem,5vw,4rem) clamp(1.2rem,6vw,4rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(90deg,transparent,rgba(0,245,255,.025),transparent);position:relative;z-index:1;}
 .stat{text-align:center;min-width:90px;}
 .stat-n{font-family:'Bebas Neue',cursive;font-size:clamp(2.2rem,6vw,3.5rem);color:var(--cyan);text-shadow:0 0 20px rgba(0,245,255,.4);line-height:1;}
 .stat-l{font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.22em;color:var(--mid);text-transform:uppercase;margin-top:.4rem;}
@@ -155,7 +151,7 @@ section{position:relative;z-index:1;}
 .skill-category{border:1px solid var(--border);background:var(--surface);padding:clamp(1.5rem,3vw,2.2rem);position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s;}
 .skill-category::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);transform:scaleX(0);transition:transform .5s;}
 .skill-category:hover::before{transform:scaleX(1);}
-.skill-category:hover{border-color:rgba(0,245,255,.22);box-shadow:0 8px 30px rgba(0,0,0,.35),0 0 15px rgba(0,245,255,.04);}
+.skill-category:hover{border-color:rgba(0,245,255,.22);box-shadow:0 8px 30px rgba(0,0,0,.35);}
 .sc-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;}
 .sc-icon{width:34px;height:34px;flex-shrink:0;}
 .sc-icon canvas{width:100%;height:100%;}
@@ -186,8 +182,8 @@ section{position:relative;z-index:1;}
 .tl-desc{font-size:clamp(.82rem,1.3vw,.92rem);color:rgba(232,244,248,.6);line-height:1.7;}
 
 /* EDUCATION */
-#education .inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;}
-@media(max-width:900px){#education .inner{grid-template-columns:1fr;}}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:start;}
+@media(max-width:768px){.edu-grid{grid-template-columns:1fr;}}
 .edu-card{border:1px solid var(--border);background:var(--surface);padding:clamp(1.5rem,3vw,2.5rem);position:relative;overflow:hidden;}
 .edu-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(180deg,var(--cyan),var(--magenta));}
 .edu-degree{font-family:'Bebas Neue',cursive;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:.05em;margin-bottom:.5rem;}
@@ -223,8 +219,9 @@ section{position:relative;z-index:1;}
 .pc.s{grid-column:span 7;}
 @media(max-width:1024px){.pc.l,.pc.m,.pc.w,.pc.s{grid-column:span 6;}}
 @media(max-width:640px){.pc.l,.pc.m,.pc.w,.pc.s{grid-column:span 12;}}
-.pc-canvas-wrap{width:100%;aspect-ratio:16/10;overflow:hidden;}
-.pc-canvas-wrap canvas{width:100%;height:100%;display:block;}
+/* KEY FIX: canvas inside .pc-canvas-wrap must have explicit size */
+.pc-canvas-wrap{width:100%;aspect-ratio:16/10;overflow:hidden;display:block;position:relative;}
+.pc-canvas-wrap canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
 .pc-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(0deg,rgba(2,4,8,.95),transparent);transform:translateY(35%);transition:transform .4s;}
 .pc:hover .pc-overlay{transform:translateY(0);}
 .pc-num{font-family:'Space Mono',monospace;font-size:.52rem;color:var(--cyan);letter-spacing:.25em;margin-bottom:.4rem;}
@@ -342,28 +339,32 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
 
+  <!-- HERO RIGHT — profile photo, properly closed -->
   <div class="hero-right">
     <div id="scene-wrap"><canvas id="scene-canvas"></canvas></div>
     <div class="profile-frame-wrap">
-      <div class="profile-frame" id="profile-frame">
+      <div class="profile-frame">
         <img src="profile.jpeg" alt="Syed Wasi Akbar" id="dev-img">
         <div class="profile-overlay-grad"></div>
         <div class="profile-name-tag">
-          <div class="pnt-name"> Syed Wasi Akbar</div>
+          <div class="pnt-name">Syed Wasi Akbar</div>
           <div class="pnt-role">Frontend &amp; Mobile Engineer · UAF CS 2026</div>
         </div>
-        
+      </div><!-- /.profile-frame -->
       <div class="dev-corner dc-tl"></div>
       <div class="dev-corner dc-tr"></div>
       <div class="dev-corner dc-bl"></div>
       <div class="dev-corner dc-br"></div>
-    </div>
-  </div>
-  <div class="scroll-ind" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);">
-    <div class="scroll-txt">Scroll</div>
-    <div class="scroll-line"></div>
-  </div>
-</section>
+    </div><!-- /.profile-frame-wrap -->
+  </div><!-- /.hero-right -->
+
+</section><!-- /#hero -->
+
+<!-- SCROLL INDICATOR -->
+<div class="scroll-ind">
+  <div class="scroll-txt">Scroll</div>
+  <div class="scroll-line"></div>
+</div>
 
 <!-- STATS -->
 <div class="stats-row reveal">
@@ -388,7 +389,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="about-badge">UAF CS Student</div>
       </div>
     </div>
-
     <div class="glass-card reveal">
       <div class="gc-title">Technical Stack</div>
       <div class="skill-group">
@@ -428,10 +428,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
     <div class="skills-section-grid">
       <div class="skill-category cat-frontend reveal">
-        <div class="sc-header">
-          <div class="sc-icon"><canvas class="cat-icon-cv" data-color="0,245,255"></canvas></div>
-          <div><span class="sc-num">01</span><div class="sc-title">Frontend</div></div>
-        </div>
+        <div class="sc-header"><div class="sc-icon"><canvas class="cat-icon-cv" data-color="0,245,255"></canvas></div><div><span class="sc-num">01</span><div class="sc-title">Frontend</div></div></div>
         <div class="skill-bars">
           <div><div class="sb-top"><span class="sb-name">HTML5</span><span class="sb-pct">96%</span></div><div class="sb-track"><div class="sb-fill" data-w="96"></div></div></div>
           <div><div class="sb-top"><span class="sb-name">CSS3 / Tailwind</span><span class="sb-pct">90%</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
@@ -441,10 +438,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
       <div class="skill-category cat-mobile reveal">
-        <div class="sc-header">
-          <div class="sc-icon"><canvas class="cat-icon-cv" data-color="255,0,144"></canvas></div>
-          <div><span class="sc-num">02</span><div class="sc-title">Mobile</div></div>
-        </div>
+        <div class="sc-header"><div class="sc-icon"><canvas class="cat-icon-cv" data-color="255,0,144"></canvas></div><div><span class="sc-num">02</span><div class="sc-title">Mobile</div></div></div>
         <div class="skill-bars">
           <div><div class="sb-top"><span class="sb-name">React Native</span><span class="sb-pct">90%</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
           <div><div class="sb-top"><span class="sb-name">Expo</span><span class="sb-pct">82%</span></div><div class="sb-track"><div class="sb-fill" data-w="82"></div></div></div>
@@ -454,10 +448,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
       <div class="skill-category cat-backend reveal">
-        <div class="sc-header">
-          <div class="sc-icon"><canvas class="cat-icon-cv" data-color="0,255,136"></canvas></div>
-          <div><span class="sc-num">03</span><div class="sc-title">Backend & APIs</div></div>
-        </div>
+        <div class="sc-header"><div class="sc-icon"><canvas class="cat-icon-cv" data-color="0,255,136"></canvas></div><div><span class="sc-num">03</span><div class="sc-title">Backend & APIs</div></div></div>
         <div class="skill-bars">
           <div><div class="sb-top"><span class="sb-name">Firebase</span><span class="sb-pct">85%</span></div><div class="sb-track"><div class="sb-fill" data-w="85"></div></div></div>
           <div><div class="sb-top"><span class="sb-name">Firestore / RTDB</span><span class="sb-pct">82%</span></div><div class="sb-track"><div class="sb-fill" data-w="82"></div></div></div>
@@ -467,10 +458,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
       <div class="skill-category cat-tools reveal">
-        <div class="sc-header">
-          <div class="sc-icon"><canvas class="cat-icon-cv" data-color="255,215,0"></canvas></div>
-          <div><span class="sc-num">04</span><div class="sc-title">Tools & More</div></div>
-        </div>
+        <div class="sc-header"><div class="sc-icon"><canvas class="cat-icon-cv" data-color="255,215,0"></canvas></div><div><span class="sc-num">04</span><div class="sc-title">Tools & More</div></div></div>
         <div class="skill-bars">
           <div><div class="sb-top"><span class="sb-name">Git / GitHub</span><span class="sb-pct">88%</span></div><div class="sb-track"><div class="sb-fill" data-w="88"></div></div></div>
           <div><div class="sb-top"><span class="sb-name">VS Code</span><span class="sb-pct">95%</span></div><div class="sb-track"><div class="sb-fill" data-w="95"></div></div></div>
@@ -526,7 +514,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <h2 class="section-title">Education</h2>
       <div class="section-count">[ UAF 2022–2026 ]</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:start;">
+    <div class="edu-grid">
       <div class="edu-card reveal">
         <div class="edu-degree">Bachelor of Computer Science</div>
         <div class="edu-uni">University of Agriculture Faisalabad</div>
@@ -542,7 +530,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <span class="cv-icon">🏆</span>
         <div class="cv-title">Always Learning</div>
         <p class="cv-text">"I am deeply interested in the theoretical underpinnings of computation while building practical, modern applications that solve real problems."</p>
-        <a href="my-cv.pdf" download="Syed_Wasi_Akbar_CV" class="btn-p" style="margin-top:.5rem;">
+        <a href="my-cv.pdf" download="Syed_Wasi_Akbar_CV" class="btn-p" style="margin-top:.5rem;display:inline-flex;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download CV
         </a>
@@ -550,58 +538,50 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
 </section>
-<!-- media fix for edu grid -->
-<style>
-@media(max-width:768px){
-  #education .inner > div[style]{grid-template-columns:1fr!important;}
-}
-</style>
 
 <!-- WORK -->
 <section id="work" class="section-pad">
   <div class="inner">
     <div class="section-hdr reveal">
       <h2 class="section-title">Selected<br>Work</h2>
-      <div class="section-count">[ 03 PROJECTS ]</div>
+      <div class="section-count">[ 04 PROJECTS ]</div>
     </div>
     <div class="proj-grid">
+
       <div class="pc l reveal" data-c1="0,245,255">
         <div class="pc-canvas-wrap"><canvas class="proj-cv"></canvas></div>
         <div class="pc-overlay">
-          <div class="pc-num">01 / 03</div>
+          <div class="pc-num">01 / 04</div>
           <div class="pc-name">BlueRoute Logistics</div>
           <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
-          <div class="pc-links">
-            <a href="https://blueroutelogistic.online/" target="_blank" class="pc-link">Live Site ↗</a>
-          </div>
+          <div class="pc-links"><a href="https://blueroutelogistic.online/" target="_blank" class="pc-link">Live Site ↗</a></div>
         </div>
         <div class="pc-arrow">↗</div>
       </div>
+
       <div class="pc m reveal" data-c1="255,0,144">
         <div class="pc-canvas-wrap"><canvas class="proj-cv"></canvas></div>
         <div class="pc-overlay">
-          <div class="pc-num">02 / 03</div>
+          <div class="pc-num">02 / 04</div>
           <div class="pc-name">Kernel Perf. Test</div>
           <div class="pc-tags"><span class="pc-tag">JavaScript</span><span class="pc-tag">Python</span></div>
-          <div class="pc-links">
-            <a href="https://pkpt-proj.vercel.app/" target="_blank" class="pc-link">Live Site ↗</a>
-          </div>
+          <div class="pc-links"><a href="https://pkpt-proj.vercel.app/" target="_blank" class="pc-link">Live Site ↗</a></div>
         </div>
         <div class="pc-arrow">↗</div>
       </div>
-      <div class="pc s reveal" data-c1="0,255,136">
+
+      <div class="pc w reveal" data-c1="0,255,136">
         <div class="pc-canvas-wrap"><canvas class="proj-cv"></canvas></div>
         <div class="pc-overlay">
-          <div class="pc-num">03 / 03</div>
+          <div class="pc-num">03 / 04</div>
           <div class="pc-name">Enrollment System</div>
           <div class="pc-tags"><span class="pc-tag">React Native</span><span class="pc-tag">Firebase</span></div>
-          <div class="pc-links">
-            <a href="https://github.com/wasiakbar8/Ug-form-System" target="_blank" class="pc-link">GitHub ↗</a>
-          </div>
+          <div class="pc-links"><a href="https://github.com/wasiakbar8/Ug-form-System" target="_blank" class="pc-link">GitHub ↗</a></div>
         </div>
         <div class="pc-arrow">↗</div>
       </div>
-      <div class="pc w reveal" data-c1="255,215,0">
+
+      <div class="pc s reveal" data-c1="255,215,0">
         <div class="pc-canvas-wrap"><canvas class="proj-cv"></canvas></div>
         <div class="pc-overlay">
           <div class="pc-num">04 / 04</div>
@@ -610,6 +590,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
         <div class="pc-arrow">↗</div>
       </div>
+
     </div>
   </div>
 </section>
@@ -622,30 +603,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="section-count">[ 04 STEPS ]</div>
     </div>
     <div class="workflow-grid">
-      <div class="wf-card reveal">
-        <div class="wf-num">01</div>
-        <div class="wf-icon">🔍</div>
-        <div class="wf-title">Discovery</div>
-        <p class="wf-desc">Understanding requirements and defining the core problem to solve.</p>
-      </div>
-      <div class="wf-card reveal">
-        <div class="wf-num">02</div>
-        <div class="wf-icon">✏️</div>
-        <div class="wf-title">Design</div>
-        <p class="wf-desc">Prototyping architecture and UI/UX flow before writing a line of code.</p>
-      </div>
-      <div class="wf-card reveal">
-        <div class="wf-num">03</div>
-        <div class="wf-icon">⚡</div>
-        <div class="wf-title">Development</div>
-        <p class="wf-desc">Writing clean, scalable React Native & web code with best practices.</p>
-      </div>
-      <div class="wf-card reveal">
-        <div class="wf-num">04</div>
-        <div class="wf-icon">🚀</div>
-        <div class="wf-title">Launch</div>
-        <p class="wf-desc">Testing, deployment, and final delivery — on time, every time.</p>
-      </div>
+      <div class="wf-card reveal"><div class="wf-num">01</div><div class="wf-icon">🔍</div><div class="wf-title">Discovery</div><p class="wf-desc">Understanding requirements and defining the core problem to solve.</p></div>
+      <div class="wf-card reveal"><div class="wf-num">02</div><div class="wf-icon">✏️</div><div class="wf-title">Design</div><p class="wf-desc">Prototyping architecture and UI/UX flow before writing a line of code.</p></div>
+      <div class="wf-card reveal"><div class="wf-num">03</div><div class="wf-icon">⚡</div><div class="wf-title">Development</div><p class="wf-desc">Writing clean, scalable React Native & web code with best practices.</p></div>
+      <div class="wf-card reveal"><div class="wf-num">04</div><div class="wf-icon">🚀</div><div class="wf-title">Launch</div><p class="wf-desc">Testing, deployment, and final delivery — on time, every time.</p></div>
     </div>
   </div>
 </section>
@@ -696,7 +657,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <a href="https://www.linkedin.com/in/syed-wasi-akbar-/" target="_blank" class="social-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
       </a>
-      <a href="https://instagram.com/" target="_blank" class="social-link">
+      <a href="https://instagram.com/__wasi_shah/" target="_blank" class="social-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram
       </a>
     </div>
@@ -718,7 +679,6 @@ const ldInt=setInterval(()=>{pct+=Math.random()*18+4;if(pct>=100){pct=100;clearI
 window.addEventListener('scroll',()=>{
   const s=(document.documentElement.scrollTop/(document.documentElement.scrollHeight-document.documentElement.clientHeight))*100;
   document.getElementById('progress-bar').style.width=s+'%';
-  // parallax
   const hn=document.querySelector('.hero-name');
   if(hn)hn.style.transform=`translateY(${window.scrollY*.18}px)`;
 });
@@ -749,7 +709,7 @@ const barObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.querySelectorAll('.sb-fill,.progress-fill').forEach(b=>{
-        setTimeout(()=>{b.style.width=(b.dataset.w||b.getAttribute('data-width')||'0')+(b.dataset.w?'%':'');},200);
+        setTimeout(()=>{const val=b.dataset.w;if(val)b.style.width=val+'%';},200);
       });
       barObs.unobserve(e.target);
     }
@@ -794,7 +754,7 @@ document.addEventListener('mousemove',e=>{mI.x=(e.clientX/BW-.5)*2;mI.y=(e.clien
 (()=>{
   const cv=document.getElementById('scene-canvas'),ctx=cv.getContext('2d');
   const wrap=document.getElementById('scene-wrap');
-  function sz(){cv.width=wrap.offsetWidth;cv.height=wrap.offsetHeight;}
+  function sz(){cv.width=wrap.offsetWidth||400;cv.height=wrap.offsetHeight||400;}
   sz();new ResizeObserver(sz).observe(wrap);
   const phi=(1+Math.sqrt(5))/2;
   const rv=[[-1,phi,0],[1,phi,0],[-1,-phi,0],[1,-phi,0],[0,-1,phi],[0,1,phi],[0,-1,-phi],[0,1,-phi],[phi,0,-1],[phi,0,1],[-phi,0,-1],[-phi,0,1]];
@@ -825,34 +785,81 @@ document.addEventListener('mousemove',e=>{mI.x=(e.clientX/BW-.5)*2;mI.y=(e.clien
   })();
 })();
 
-// ═══ IMAGE UPLOAD ═══
-document.getElementById('upload-btn').addEventListener('click',()=>document.getElementById('img-file-input').click());
-document.getElementById('img-file-input').addEventListener('change',e=>{
-  const file=e.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    const img=document.getElementById('dev-img');
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-});
+// ═══ PROJECT CARDS — the core fix ═══
+// Wait for layout to settle, then init canvases with correct pixel dimensions
+window.addEventListener('load', () => {
+  document.querySelectorAll('.proj-cv').forEach((cv, idx) => {
+    const card = cv.closest('.pc');
+    const wrap = cv.parentElement; // .pc-canvas-wrap
+    const rgb = card.dataset.c1 || '0,245,255';
+    const ctx = cv.getContext('2d');
+    let W = 0, H = 0, t = Math.random() * 100;
 
-// ═══ PROJECT CARDS ═══
-document.querySelectorAll('.proj-cv').forEach((cv,idx)=>{
-  const card=cv.closest('.pc'),rgb=card.dataset.c1||'0,245,255';
-  const ctx=cv.getContext('2d');let W,H,t=Math.random()*100;
-  function rs(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  rs();new ResizeObserver(rs).observe(cv);
-  const draws=[
-    ()=>{ctx.fillStyle='rgba(2,4,8,.18)';ctx.fillRect(0,0,W,H);for(let ly=0;ly<3;ly++){ctx.beginPath();for(let x=0;x<=W;x+=3){const y=H/2+Math.sin((x/W*4+t*.5+ly*.8)*Math.PI*2)*H*.22*Math.cos(t*.3+ly);x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.strokeStyle=`rgba(${rgb},${.6-ly*.15})`;ctx.lineWidth=2-ly*.4;ctx.stroke();}},
-    ()=>{ctx.fillStyle='rgba(2,4,8,.07)';ctx.fillRect(0,0,W,H);for(let i=0;i<5;i++){const x=W/2+Math.cos(t*.4+i*1.3)*W*.3,y=H/2+Math.sin(t*.3+i*.9)*H*.3;const g=ctx.createRadialGradient(x,y,0,x,y,70+Math.sin(t+i)*25);g.addColorStop(0,`rgba(${rgb},.28)`);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}},
-    ()=>{ctx.fillStyle='rgba(2,4,8,.14)';ctx.fillRect(0,0,W,H);const gs=Math.max(20,Math.min(35,W/12));for(let x=0;x<W;x+=gs){for(let y=0;y<H;y+=gs){const d=Math.sqrt((x-W/2)**2+(y-H/2)**2),wv=Math.sin(d*.05-t*2)*.5+.5;ctx.fillStyle=`rgba(${rgb},${wv*.3})`;ctx.fillRect(x,y,2,2);}}},
-    ()=>{ctx.fillStyle='rgba(2,4,8,.11)';ctx.fillRect(0,0,W,H);for(let i=0;i<80;i++){const an=i*.2+t*.5,rad=i*1.8+Math.sin(t+i*.1)*15;const x=W/2+Math.cos(an)*rad,y=H/2+Math.sin(an)*rad;ctx.beginPath();ctx.arc(x,y,1.4,0,Math.PI*2);ctx.fillStyle=`rgba(${rgb},${1-i/80})`;ctx.fill();}}
-  ];
-  const draw=draws[idx%draws.length];
-  (function al(){t+=.016;draw();requestAnimationFrame(al);})();
-  card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`translateY(-6px) perspective(800px) rotateY(${x*7}deg) rotateX(${-y*7}deg)`;});
-  card.addEventListener('mouseleave',()=>card.style.transform='');
+    function resize() {
+      const r = wrap.getBoundingClientRect();
+      W = cv.width  = Math.round(r.width)  || wrap.offsetWidth  || 400;
+      H = cv.height = Math.round(r.height) || wrap.offsetHeight || 250;
+    }
+    resize();
+    new ResizeObserver(resize).observe(wrap);
+
+    const draws = [
+      // Wave
+      () => {
+        ctx.fillStyle = 'rgba(2,4,8,.18)'; ctx.fillRect(0, 0, W, H);
+        for (let ly = 0; ly < 3; ly++) {
+          ctx.beginPath();
+          for (let x = 0; x <= W; x += 3) {
+            const y = H/2 + Math.sin((x/W*4 + t*.5 + ly*.8) * Math.PI*2) * H*.22 * Math.cos(t*.3 + ly);
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(${rgb},${.6 - ly*.15})`; ctx.lineWidth = 2 - ly*.4; ctx.stroke();
+        }
+      },
+      // Nebula
+      () => {
+        ctx.fillStyle = 'rgba(2,4,8,.07)'; ctx.fillRect(0, 0, W, H);
+        for (let i = 0; i < 5; i++) {
+          const x = W/2 + Math.cos(t*.4 + i*1.3)*W*.3, y = H/2 + Math.sin(t*.3 + i*.9)*H*.3;
+          const g = ctx.createRadialGradient(x, y, 0, x, y, 70 + Math.sin(t+i)*25);
+          g.addColorStop(0, `rgba(${rgb},.28)`); g.addColorStop(1, 'transparent');
+          ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        }
+      },
+      // Grid dots
+      () => {
+        ctx.fillStyle = 'rgba(2,4,8,.14)'; ctx.fillRect(0, 0, W, H);
+        const gs = Math.max(20, Math.min(35, W/12));
+        for (let x = 0; x < W; x += gs) {
+          for (let y = 0; y < H; y += gs) {
+            const d = Math.sqrt((x-W/2)**2 + (y-H/2)**2);
+            const wv = Math.sin(d*.05 - t*2)*.5 + .5;
+            ctx.fillStyle = `rgba(${rgb},${wv*.3})`; ctx.fillRect(x, y, 2, 2);
+          }
+        }
+      },
+      // Vortex
+      () => {
+        ctx.fillStyle = 'rgba(2,4,8,.11)'; ctx.fillRect(0, 0, W, H);
+        for (let i = 0; i < 80; i++) {
+          const an = i*.2 + t*.5, rad = i*1.8 + Math.sin(t + i*.1)*15;
+          const x = W/2 + Math.cos(an)*rad, y = H/2 + Math.sin(an)*rad;
+          ctx.beginPath(); ctx.arc(x, y, 1.4, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(${rgb},${1 - i/80})`; ctx.fill();
+        }
+      }
+    ];
+
+    const draw = draws[idx % draws.length];
+    (function al() { t += .016; if (W > 0 && H > 0) draw(); requestAnimationFrame(al); })();
+
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+      card.style.transform = `translateY(-6px) perspective(800px) rotateY(${x*7}deg) rotateX(${-y*7}deg)`;
+    });
+    card.addEventListener('mouseleave', () => card.style.transform = '');
+  });
 });
 
 // ═══ SERVICE ICONS ═══
@@ -862,7 +869,7 @@ document.querySelectorAll('.svc-cv').forEach((cv,i)=>{
   (function loop(){
     ctx.clearRect(0,0,42,42);t+=.05;
     if(i===0){for(let j=0;j<6;j++){const x=21+Math.cos(t+j*Math.PI/3)*12,y=21+Math.sin(t+j*Math.PI/3)*12;ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fillStyle=`rgba(${rgb},${.5+j*.08})`;ctx.fill();if(j>0){const px=21+Math.cos(t+(j-1)*Math.PI/3)*12,py=21+Math.sin(t+(j-1)*Math.PI/3)*12;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(px,py);ctx.strokeStyle=`rgba(${rgb},.3)`;ctx.lineWidth=.5;ctx.stroke();}}}
-    else if(i===1){const sx=.92+Math.sin(t)*.06;ctx.save();ctx.translate(21,21);ctx.scale(sx,1);ctx.strokeStyle=`rgba(${rgb},.7)`;ctx.lineWidth=1.4;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(-6,-12,12,24,2);else{ctx.rect(-6,-12,12,24);}ctx.stroke();ctx.beginPath();ctx.arc(0,8,1.5,0,Math.PI*2);ctx.fillStyle=`rgba(${rgb},.7)`;ctx.fill();ctx.restore();}
+    else if(i===1){const sx=.92+Math.sin(t)*.06;ctx.save();ctx.translate(21,21);ctx.scale(sx,1);ctx.strokeStyle=`rgba(${rgb},.7)`;ctx.lineWidth=1.4;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(-6,-12,12,24,2);else ctx.rect(-6,-12,12,24);ctx.stroke();ctx.beginPath();ctx.arc(0,8,1.5,0,Math.PI*2);ctx.fillStyle=`rgba(${rgb},.7)`;ctx.fill();ctx.restore();}
     else{for(let j=0;j<4;j++){const bh=(Math.sin(t+j)*.5+.5)*24+5;ctx.fillStyle=`rgba(${rgb},${.3+j*.12})`;ctx.fillRect(j*9+2,42-bh,7,bh);}}
     requestAnimationFrame(loop);
   })();
@@ -880,11 +887,6 @@ document.querySelectorAll('.cat-icon-cv').forEach((cv,i)=>{
     else{ctx.save();ctx.translate(17,17);ctx.rotate(t*.5);ctx.strokeStyle=`rgba(${rgb},.7)`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.stroke();for(let k=0;k<6;k++){const a=k*Math.PI/3;ctx.beginPath();ctx.moveTo(Math.cos(a)*5,Math.sin(a)*5);ctx.lineTo(Math.cos(a)*10,Math.sin(a)*10);ctx.stroke();}ctx.restore();}
     requestAnimationFrame(loop);
   })();
-});
-
-// ═══ GLITCH ═══
-document.querySelectorAll('.glitch').forEach(el=>{
-  // CSS handles it
 });
 </script>
 </body>
