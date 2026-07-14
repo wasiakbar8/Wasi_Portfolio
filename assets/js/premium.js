@@ -349,7 +349,7 @@ if (contactForm) {
 
     try {
       const formData = new FormData(contactForm);
-      const response = await fetch('https://formsubmit.co/syedwasiakbar@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/syedwasiakbar@gmail.com', {
         method: 'POST',
         body: formData
       });
@@ -505,6 +505,41 @@ setTimeout(() => {
     setTimeout(() => toast.remove(), 500);
   }, 3500);
 }, 1500);
+
+// ============ FORCE DOWNLOAD CV ============
+window.forceDownloadCV = function(e) {
+  e.preventDefault();
+  const url = e.currentTarget.getAttribute('href');
+  const filename = e.currentTarget.getAttribute('download') || 'Syed-Wasi-Akbar-CV.pdf';
+  
+  // Show a visual loading indicator on the clicked button
+  const originalHTML = e.currentTarget.innerHTML;
+  e.currentTarget.innerHTML = 'Downloading...';
+  
+  fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.blob();
+    })
+    .then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    })
+    .catch(err => {
+      console.error('Failed to download PDF:', err);
+      // Fallback: open in new tab
+      window.open(url, '_blank');
+    })
+    .finally(() => {
+      e.currentTarget.innerHTML = originalHTML;
+    });
+};
 
 console.log('%c✨ Syed Wasi Akbar Portfolio', 'font-size:18px; font-weight:bold; color:#6c63ff; font-family:Space Grotesk;');
 console.log('%cBuilt with ❤️ using HTML, CSS & Vanilla JS', 'font-size:13px; color:#a78bfa;');
