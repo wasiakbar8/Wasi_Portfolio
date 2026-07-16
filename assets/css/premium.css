@@ -111,28 +111,34 @@ button { cursor: none; border: none; background: none; }
 /* ============ CUSTOM CURSOR ============ */
 .cursor-dot {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 8px;
   height: 8px;
   background: var(--accent-primary);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, opacity 0.3s ease;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.3s ease;
   mix-blend-mode: screen;
+  will-change: transform;
 }
 
 .cursor-ring {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 36px;
   height: 36px;
   border: 1.5px solid rgba(108, 99, 255, 0.6);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease, width 0.3s var(--transition-spring), height 0.3s var(--transition-spring), border-color 0.3s ease;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.15s ease, width 0.3s var(--transition-spring), height 0.3s var(--transition-spring), border-color 0.3s ease, background 0.3s ease;
   backdrop-filter: blur(2px);
+  will-change: transform;
 }
 
 .cursor-ring.hovered {
@@ -397,6 +403,7 @@ button { cursor: none; border: none; background: none; }
   transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .reveal.visible {
@@ -409,6 +416,7 @@ button { cursor: none; border: none; background: none; }
   transform: translateX(-40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .reveal-left.visible {
@@ -421,6 +429,7 @@ button { cursor: none; border: none; background: none; }
   transform: translateX(40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .reveal-right.visible {

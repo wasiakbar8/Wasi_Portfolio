@@ -10,28 +10,41 @@ const cursorRing = document.querySelector('.cursor-ring');
 
 let mouseX = 0, mouseY = 0;
 let ringX = 0, ringY = 0;
+let hasMoved = false;
+
+// Initially hide cursors to avoid flash at top-left corner
+if (cursorDot) cursorDot.style.opacity = '0';
+if (cursorRing) cursorRing.style.opacity = '0';
 
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 
-  cursorDot.style.left = mouseX + 'px';
-  cursorDot.style.top = mouseY + 'px';
+  if (!hasMoved) {
+    hasMoved = true;
+    if (cursorDot) cursorDot.style.opacity = '1';
+    if (cursorRing) cursorRing.style.opacity = '1';
+  }
+
+  if (cursorDot) {
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+  }
 });
 
 function animateCursor() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  cursorRing.style.left = ringX + 'px';
-  cursorRing.style.top = ringY + 'px';
+  if (hasMoved && cursorRing) {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+  }
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
 
 // Cursor hover on interactive elements
 document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorRing.classList.add('hovered'));
-  el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovered'));
+  el.addEventListener('mouseenter', () => cursorRing && cursorRing.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => cursorRing && cursorRing.classList.remove('hovered'));
 });
 
 // ============ NAVBAR ============
@@ -149,16 +162,19 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 
 function connectParticles() {
   for (let i = 0; i < particles.length; i++) {
+    const p1 = particles[i];
     for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
+      const p2 = particles[j];
+      const dx = p1.x - p2.x;
+      const dy = p1.y - p2.y;
+      const distSq = dx * dx + dy * dy;
+      if (distSq < 14400) { // 120 * 120
+        const dist = Math.sqrt(distSq);
         ctx.beginPath();
         ctx.strokeStyle = `rgba(108,99,255,${0.06 * (1 - dist / 120)})`;
         ctx.lineWidth = 0.5;
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
         ctx.stroke();
       }
     }
@@ -316,22 +332,32 @@ filterBtns.forEach(btn => {
 
 // ============ CARD TILT EFFECT ============
 document.querySelectorAll('[data-tilt]').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
+  let isMoving = false;
 
-    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-    card.style.transition = 'transform 0.1s ease';
+  card.addEventListener('mousemove', (e) => {
+    if (isMoving) return;
+    isMoving = true;
+
+    requestAnimationFrame(() => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -8;
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+      card.style.transition = 'transform 0s'; // Disable transition delay during mouse move
+      isMoving = false;
+    });
   });
 
   card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
-    card.style.transition = 'transform 0.5s ease';
+    requestAnimationFrame(() => {
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+      card.style.transition = 'transform 0.5s ease'; // Smooth reset on leave
+    });
   });
 });
 
