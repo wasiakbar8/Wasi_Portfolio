@@ -1,5 +1,6 @@
 import React from 'react';
 import { FadeIn, Magnet, ContactButton } from './UIComponents';
+import photoPortrait from '../assets/photo.jpeg';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ export const HeroSection: React.FC = () => {
       {/* Background Image Layer with subtle 15% opacity */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
-          src="/photo.jpeg"
+          src={photoPortrait}
           alt="Background Portrait"
           className="w-full h-full object-cover object-top opacity-15 filter blur-[2px] scale-105"
         />
@@ -52,7 +53,7 @@ export const HeroSection: React.FC = () => {
           className="w-full flex justify-center items-end"
         >
           <img
-            src="/photo.jpeg"
+            src={photoPortrait}
             alt="Syed Wasi Akbar Portrait"
             className="w-full h-[320px] sm:h-[400px] md:h-[480px] object-cover object-top rounded-t-[100px] sm:rounded-t-[140px] border-4 border-[#BBCCD7]/20 shadow-2xl pointer-events-auto drop-shadow-2xl opacity-65 hover:opacity-100 transition-opacity duration-300"
           />
